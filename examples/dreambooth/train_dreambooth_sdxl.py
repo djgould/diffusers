@@ -738,6 +738,10 @@ def main(args):
         text_encoder_one.to(accelerator.device, dtype=weight_dtype)
         text_encoder_two.to(accelerator.device, dtype=weight_dtype)
 
+    unet.to(accelerator.device, dtype=weight_dtype)
+    text_encoder_one.to(accelerator.device, dtype=weight_dtype)
+    text_encoder_two.to(accelerator.device, dtype=weight_dtype)
+
     if args.enable_xformers_memory_efficient_attention:
         if is_xformers_available():
             import xformers
