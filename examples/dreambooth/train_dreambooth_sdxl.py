@@ -734,7 +734,7 @@ def main(args):
     else:
         vae.to(accelerator.device, dtype=weight_dtype)
 
-    if not args.train_text_encoder and text_encoder_one and text_encoder_two is not None:
+    if not args.train_text_encoder and text_encoder_one is not None and text_encoder_two is not None:
         text_encoder_one.to(accelerator.device, dtype=weight_dtype)
         text_encoder_two.to(accelerator.device, dtype=weight_dtype)
 
