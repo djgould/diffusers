@@ -265,6 +265,12 @@ def parse_args(input_args=None):
         help="Total number of training steps to perform.  If provided, overrides num_train_epochs.",
     )
     parser.add_argument(
+        "--start_checkpointing_step",
+        type=int,
+        default=0,
+        help="The step to start checkpointing from. Useful if you want to checkpoint frequently but not in the beginning of a run."
+    )
+    parser.add_argument(
         "--checkpointing_steps",
         type=int,
         default=500,
@@ -1185,7 +1191,7 @@ def main(args):
                 global_step += 1
 
                 if accelerator.is_main_process:
-                    if global_step % args.checkpointing_steps == 0:
+                    if global_step >= args.start_checkpointing_step and global_step % args.checkpointing_steps == 0:
                         # _before_ saving state, check if this save would set us over the `checkpoints_total_limit`
                         if args.checkpoints_total_limit is not None:
                             checkpoints = os.listdir(args.output_dir)
